@@ -1,33 +1,54 @@
-import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
+import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
+import { ToastrModule } from 'ngx-toastr';
+import { TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import { TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
+
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './components/header/header.component';
-import { NavComponent } from './components/nav/nav.component';
-import { FeaturesComponent } from './components/features/features.component';
-import { AboutComponent } from './components/about/about.component';
-import { RestaurantMenuComponent } from './components/restaurant-menu/restaurant-menu.component';
-import { GalleryComponent } from './components/gallery/gallery.component';
-import { TeamComponent } from './components/team/team.component';
-import { ContactComponent } from './components/contact/contact.component';
-import { FooterComponent } from './components/footer/footer.component';
+import { ShopComponent } from './shop/shop.component';
+import { PagesComponent } from './pages/pages.component';
+import { ElementsComponent } from './elements/elements.component';
+
+
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(http: HttpClient) {
+   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
+}
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    NavComponent,
-    FeaturesComponent,
-    AboutComponent,
-    RestaurantMenuComponent,
-    GalleryComponent,
-    TeamComponent,
-    ContactComponent,
-    FooterComponent
+    ShopComponent,
+    PagesComponent,
+    ElementsComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    BrowserAnimationsModule,
+    HttpClientModule,
+    NgbModule,
+    LoadingBarHttpClientModule,
+    LoadingBarRouterModule,
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      progressBar: false,
+      enableHtml: true,
+    }),
+    TranslateModule.forRoot({
+        loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+        }
+    }),
+    SharedModule,
     AppRoutingModule
   ],
   providers: [],
