@@ -1,0 +1,23 @@
+/* Gallery Section */
+#gallery {
+	padding: 0;
+}
+#gallery .gallery-item {
+	margin: 0 -15px;
+}
+/* Team Section */
+#team {
+	padding: 120px 0;
+}
+#team h2::after {
+	bottom: 0;
+	margin-left: 0;
+	left: 0;
+}
+#team img {
+	max-width: 550px;
+}
+#team .team-img {
+	display: inline-block;
+	position: relative;
+}
